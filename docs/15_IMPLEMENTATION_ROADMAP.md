@@ -69,6 +69,11 @@
 
 ## Phase 7 — Hermès ops
 
+- Pack contexte Hermès (`hermes_context/`) — source canonique versionnée ✅ specs
+- Documentation sync : [22](22_HERMES_SKILL_AND_CONTEXT_PACK.md), [23](23_HERMES_CONTEXT_SYNC_AND_INSTALL.md)
+- Synchronisation future vers dossier Hermès local (`AppData\Local\hermes`)
+- Script futur : `scripts/sync_hermes_context.ps1` (à créer — pas en phase specs)
+- Validation de relecture Hermès après sync (checklist GO/NO GO)
 - Scripts / prompts d’exploitation
 - Rapports standardisés
 - Protocole validation Damien
@@ -100,3 +105,4 @@
 - [Tests](14_TEST_AND_VALIDATION_PLAN.md)
 - [Sécurité](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md)
 - [Décision log](16_DECISION_LOG.md)
+- [Hermès context pack](22_HERMES_SKILL_AND_CONTEXT_PACK.md)

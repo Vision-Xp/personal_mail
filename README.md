@@ -44,6 +44,8 @@ Les labels et l’organisation sont **écrits côté Gmail** pour être visibles
 | [19 — Secrets et tokens](docs/19_SECRETS_AND_TOKEN_STORAGE.md) | OAuth, keyring Windows, permissions progressives |
 | [20 — Logs et redaction](docs/20_AUDIT_LOGGING_AND_REDACTION.md) | Audit, rapports expurgés, restauration |
 | [21 — Sécurité pièces jointes](docs/21_ATTACHMENT_SECURITY.md) | Extensions dangereuses, PDF/factures, quarantaine |
+| [22 — Hermès skill / context pack](docs/22_HERMES_SKILL_AND_CONTEXT_PACK.md) | Source canonique du contexte Hermès |
+| [23 — Sync contexte Hermès](docs/23_HERMES_CONTEXT_SYNC_AND_INSTALL.md) | Installation et sync future vers dossier local |
 
 Configuration exemple (non sensible) : voir [config/README.md](config/README.md).
 
@@ -73,3 +75,15 @@ La sécurité est une **exigence transversale** : architecture, config, Hermès,
 **Règle canonique** : en cas de doute — ne pas supprimer, envoyer, ouvrir ni désabonner ; classer en validation humaine.
 
 Voir [docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md](docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md) — porte d’entrée sécurité.
+
+## Hermès context pack
+
+Le dossier [`hermes_context/`](hermes_context/README.md) est la **source canonique versionnée** du contexte opérationnel Hermès pour `personal_mail`. Il contient des résumés courts (règles, sécurité, modes, prompts, checklists) destinés à être **copiés/synchronisés plus tard** vers le dossier Hermès local — sans dupliquer toute la documentation `docs/`.
+
+| Ressource | Description |
+|-----------|-------------|
+| [hermes_context/README.md](hermes_context/README.md) | Présentation du pack |
+| [docs/22 — Hermès skill](docs/22_HERMES_SKILL_AND_CONTEXT_PACK.md) | Pourquoi le pack vit dans le repo |
+| [docs/23 — Sync et install](docs/23_HERMES_CONTEXT_SYNC_AND_INSTALL.md) | Stratégie de sync future (script non créé) |
+
+**Règle** : évolutions importantes → commit dans `personal_mail` ; le dossier Hermès local est une **copie opérationnelle**, pas la source unique.

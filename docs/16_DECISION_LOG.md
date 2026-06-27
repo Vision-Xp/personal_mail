@@ -35,6 +35,16 @@
 | 24 | **Lecture seule par défaut** (`dry-run`) et permissions progressives |
 | 25 | **Règle canonique** : en cas de doute → validation humaine, pas d’action destructive |
 
+### Hermès context pack — 2026-06-27
+
+| # | Décision |
+|---|----------|
+| 26 | Le repo **personal_mail** contient la **source canonique** du contexte Hermès (`hermes_context/`) |
+| 27 | Le dossier Hermès local est une **copie opérationnelle** — pas la source unique |
+| 28 | Les règles Hermès critiques ne doivent **pas** vivre uniquement hors Git |
+| 29 | **Aucune** donnée réelle / secrète dans `hermes_context/` |
+| 30 | Sync vers Hermès local sera **documentée puis scriptée** plus tard ([23](23_HERMES_CONTEXT_SYNC_AND_INSTALL.md)) |
+
 ## Décisions ouvertes
 
 | Sujet | Notes |
@@ -53,10 +63,12 @@
 |------|-----------|
 | 2026-06-27 | Fondation documentaire repo (phase specs) |
 | 2026-06-27 | Couche security-by-design (docs 17–21, security_policy) |
+| 2026-06-27 | Hermès context pack (docs 22–23, hermes_context/) |
 
 ## Documents liés
 
 - [Architecture](01_ARCHITECTURE_DECISIONS.md)
 - [Sécurité — porte d’entrée](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md)
 - [Modèle de menace](17_SECURITY_THREAT_MODEL.md)
+- [Hermès context pack](22_HERMES_SKILL_AND_CONTEXT_PACK.md)
 - [Roadmap](15_IMPLEMENTATION_ROADMAP.md)
