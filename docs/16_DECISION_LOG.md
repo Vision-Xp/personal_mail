@@ -20,6 +20,21 @@
 | 14 | Hermès **prépare** les mails, ne les envoie **pas** automatiquement (V1) |
 | 15 | **Damien** garde la validation finale (envoi, règles destructives, désabonnements) |
 
+### Sécurité — 2026-06-27 (session security-by-design)
+
+| # | Décision |
+|---|----------|
+| 16 | **Security-by-design obligatoire** — exigence transversale, pas une option |
+| 17 | Données mail classées **sensibles** (SENSITIVE_PERSONAL / FINANCIAL_SENSITIVE) |
+| 18 | Tokens OAuth classés **SECRET** — keyring/DPAPI, jamais Git/logs/rapports |
+| 19 | **Pas de suppression définitive automatique en V1** |
+| 20 | **Pas d’envoi automatique sensible en V1** |
+| 21 | Logs et rapports réels **non committables** — redaction par défaut |
+| 22 | Pièces jointes suspectes → **quarantaine** — pas d’exécution ni extraction PR sans validation |
+| 23 | PersonalRadar reçoit uniquement documents **validés ou non suspects** via protocole documentaire |
+| 24 | **Lecture seule par défaut** (`dry-run`) et permissions progressives |
+| 25 | **Règle canonique** : en cas de doute → validation humaine, pas d’action destructive |
+
 ## Décisions ouvertes
 
 | Sujet | Notes |
@@ -27,7 +42,7 @@
 | Client mail final | Après tests réels Thunderbird Desktop + Android (Phase 1) |
 | Format exact mail sans PJ | Préférence `.eml` + `.meta.json` — à confirmer sur cas réels |
 | Ouverture nouveau courrier Thunderbird Windows | Méthode technique pour Hermès (URI, automation, API) |
-| Stockage sécurisé des tokens OAuth | Keyring OS, fichier chiffré, autre |
+| Stockage sécurisé des tokens OAuth | Keyring OS, DPAPI — spec dans [19](19_SECRETS_AND_TOKEN_STORAGE.md) ; impl Phase 2 bis |
 | Structure finale dossiers `personal_radar\documents` | Alignement avec conventions PR existantes |
 | Niveau suppression définitive future | Hors trash Gmail — politique à définir |
 | Fréquence scans automatiques | Cron, déclenchement Hermès, événementiel |
@@ -37,8 +52,11 @@
 | Date | Événement |
 |------|-----------|
 | 2026-06-27 | Fondation documentaire repo (phase specs) |
+| 2026-06-27 | Couche security-by-design (docs 17–21, security_policy) |
 
 ## Documents liés
 
 - [Architecture](01_ARCHITECTURE_DECISIONS.md)
+- [Sécurité — porte d’entrée](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md)
+- [Modèle de menace](17_SECURITY_THREAT_MODEL.md)
 - [Roadmap](15_IMPLEMENTATION_ROADMAP.md)

@@ -15,6 +15,19 @@ personal_mail  →  fichiers dans personal_radar\documents  →  scan PersonalRa
 
 PersonalRadar reste maître de son interprétation après scan.
 
+## Sécurité de l’échange
+
+| Règle | Détail |
+|-------|--------|
+| Protocole documentaire uniquement | Fichiers + manifeste optionnel — pas d’API interne PR |
+| Interdiction écriture états internes | Base PR, caches, rapports métier PR — **interdit** en V1 |
+| Manifeste sans secrets | Pas de token, mot de passe, ni refresh dans JSONL |
+| Protection PII | Manifeste = PERSONAL_METADATA — fichier local, ignoré Git si réel |
+| Fichiers validés uniquement | Pas de PJ suspecte / non validée vers PR — voir [21](21_ATTACHMENT_SECURITY.md) |
+| Hash et traçabilité | Chaque document importé lié à `action_log_id` et `file_hash` |
+
+Les documents extraits restent classés **FINANCIAL_SENSITIVE** ou **SENSITIVE_PERSONAL** — jamais dans le repo `personal_mail`.
+
 ## Données transmissibles (via documents + manifeste)
 
 - Facture, échéance, contrat, abonnement
@@ -51,7 +64,7 @@ Chaque ligne JSONL (exemple de champs) :
 }
 ```
 
-Le manifeste est un **hint** pour PR ou pour audits Hermès — pas un contrat d’API interne PR tant que PR n’est pas modifié.
+Le manifeste est un **hint** pour PR ou pour audits Hermès — pas un contrat d’API interne PR tant que PR n’est pas modifié. **Ne jamais y inclure de secrets** (tokens, credentials).
 
 ## Alertes possibles (côté PR après scan)
 
@@ -73,4 +86,6 @@ Le manifeste est un **hint** pour PR ou pour audits Hermès — pas un contrat d
 
 - [Extraction](08_DOCUMENT_EXTRACTION_TO_PERSONAL_RADAR.md)
 - [Architecture](01_ARCHITECTURE_DECISIONS.md)
+- [Classification données](18_DATA_CLASSIFICATION_AND_RETENTION.md)
 - [config/document_routes.example.yaml](../config/document_routes.example.yaml)
+- [config/security_policy.example.yaml](../config/security_policy.example.yaml)

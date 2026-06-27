@@ -1,0 +1,39 @@
+# Security policy — example only, no secrets
+security_policy:
+  default_mode: "dry-run"
+  real_accounts_enabled_by_default: false
+
+  oauth:
+    require_oauth: true
+    forbid_plain_passwords: true
+    minimum_scopes_only: true
+    token_storage: "system_keyring_or_dpapi"
+    forbid_tokens_in_git: true
+
+  destructive_actions:
+    require_dry_run_first: true
+    require_human_validation_for_new_rules: true
+    allow_permanent_delete_v1: false
+    use_trash_before_delete: true
+    use_quarantine_for_uncertain: true
+
+  email_sending:
+    allow_auto_send_v1: false
+    require_human_validation: true
+
+  logging:
+    redact_tokens: true
+    redact_email_body_by_default: true
+    redact_sensitive_identifiers: true
+    allow_full_local_debug_logs: false
+
+  attachments:
+    never_execute: true
+    quarantine_dangerous_extensions: true
+    hash_extracted_files: true
+    require_validation_for_suspicious_files: true
+
+  personal_radar:
+    write_only_to_documents_protocol: true
+    forbid_direct_internal_state_write_v1: true
+    require_manifest_for_imported_documents: true

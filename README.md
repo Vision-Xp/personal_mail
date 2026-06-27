@@ -39,6 +39,11 @@ Les labels et l’organisation sont **écrits côté Gmail** pour être visibles
 | [14 — Plan de tests](docs/14_TEST_AND_VALIDATION_PLAN.md) | Fixtures synthétiques, critères GO/NO GO |
 | [15 — Roadmap d’implémentation](docs/15_IMPLEMENTATION_ROADMAP.md) | Phases 0 à 10 |
 | [16 — Journal des décisions](docs/16_DECISION_LOG.md) | Décisions confirmées et ouvertes |
+| [17 — Modèle de menace](docs/17_SECURITY_THREAT_MODEL.md) | Actifs, menaces, mitigations, matrice risque |
+| [18 — Classification des données](docs/18_DATA_CLASSIFICATION_AND_RETENTION.md) | Niveaux PUBLIC → SECRET, règles Git/logs |
+| [19 — Secrets et tokens](docs/19_SECRETS_AND_TOKEN_STORAGE.md) | OAuth, keyring Windows, permissions progressives |
+| [20 — Logs et redaction](docs/20_AUDIT_LOGGING_AND_REDACTION.md) | Audit, rapports expurgés, restauration |
+| [21 — Sécurité pièces jointes](docs/21_ATTACHMENT_SECURITY.md) | Extensions dangereuses, PDF/factures, quarantaine |
 
 Configuration exemple (non sensible) : voir [config/README.md](config/README.md).
 
@@ -50,14 +55,21 @@ Rapports générés (non versionnés si données perso) : voir [reports/README.m
 - **Contenu versionné** : documentation Markdown, fichiers YAML d’exemple, structure `reports/` avec README.
 - **Prochaine étape** : Phase 1 — validation Thunderbird Desktop/Android avec labels Gmail (voir [roadmap](docs/15_IMPLEMENTATION_ROADMAP.md)).
 
-## Principes de sécurité
+## Security-by-design
 
-- OAuth uniquement — jamais de mot de passe Gmail en clair.
-- Tokens et secrets exclus de Git (voir [.gitignore](.gitignore)).
-- Aucune donnée mail réelle dans le dépôt pendant la phase specs.
-- Actions destructives : dry-run obligatoire, puis validation humaine.
-- Pas d’envoi automatique de mails sensibles en V1.
-- Pièces jointes dangereuses : ne jamais ouvrir automatiquement.
-- PersonalRadar : dépôt documentaire uniquement — pas d’écriture directe dans sa base interne.
+`personal_mail` est conçu comme un **système sécurisé dès le départ**. Il traitera des mails personnels, données administratives et financières, contrats, factures, échéanciers, preuves d’achat, garanties, pièces jointes sensibles et documents destinés à `personal_radar\documents`. **Mails, documents extraits et tokens OAuth sont des données sensibles** — pas du contenu public.
 
-Voir [docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md](docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md) pour le détail.
+La sécurité est une **exigence transversale** : architecture, config, Hermès, extraction, tests et roadmap y sont alignés.
+
+| Principe | Référence |
+|----------|-----------|
+| Moindre privilège, OAuth, tokens protégés | [docs/19](docs/19_SECRETS_AND_TOKEN_STORAGE.md) |
+| Aucun secret dans Git | [.gitignore](.gitignore), [docs/18](docs/18_DATA_CLASSIFICATION_AND_RETENTION.md) |
+| Logs et rapports expurgés | [docs/20](docs/20_AUDIT_LOGGING_AND_REDACTION.md) |
+| Dry-run, quarantaine, validation humaine | [docs/17](docs/17_SECURITY_THREAT_MODEL.md) |
+| Pièces jointes : ne jamais exécuter | [docs/21](docs/21_ATTACHMENT_SECURITY.md) |
+| Politique globale (exemple) | [config/security_policy.example.yaml](config/security_policy.example.yaml) |
+
+**Règle canonique** : en cas de doute — ne pas supprimer, envoyer, ouvrir ni désabonner ; classer en validation humaine.
+
+Voir [docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md](docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md) — porte d’entrée sécurité.

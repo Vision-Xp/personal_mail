@@ -7,6 +7,8 @@ Cargo.lock
 .env.*
 *.token
 *.secret
+*.pem
+*.key
 tokens/
 secrets/
 credentials/
@@ -19,9 +21,12 @@ config/*.local.yaml
 config/*real*.yaml
 config/*private*.yaml
 
-# Caches / logs
+# Caches / logs / runtime state
 cache/
 logs/
+state/
+data/
+tmp/
 *.log
 
 # Mail data

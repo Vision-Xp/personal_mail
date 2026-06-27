@@ -1,11 +1,12 @@
 # Roadmap d’implémentation
 
-## Phase 0 — Specs repo ✅ (cette session)
+## Phase 0 — Specs repo ✅
 
 - Créer specs Markdown complètes
 - Config exemples YAML
 - Décisions d’architecture documentées
 - `.gitignore`, structure `reports/`
+- Couche security-by-design (docs 17–21, security_policy)
 - Commit / push
 
 ## Phase 1 — Choix client mail et preuve Thunderbird/Gmail
@@ -25,6 +26,16 @@
 - Mode dry-run global
 - Gestion erreurs
 - Tests unitaires de base
+
+## Phase 2 bis — Sécurité transversale (parallèle Phases 2–6)
+
+- Implémenter modèle de menace en code (modes, permissions)
+- Stockage tokens keyring / DPAPI Windows
+- Moteur de redaction logs et rapports
+- Tests sécurité S1–S12 ([14](14_TEST_AND_VALIDATION_PLAN.md))
+- Permissions progressives (read → labels → extract → trash)
+- Audit Git secrets (pre-commit ou CI : détection token/`.eml`)
+- Chargement `security_policy.local.yaml`
 
 ## Phase 3 — Gmail OAuth proof
 
@@ -87,4 +98,5 @@
 
 - [Vision](00_PRODUCT_VISION.md)
 - [Tests](14_TEST_AND_VALIDATION_PLAN.md)
+- [Sécurité](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md)
 - [Décision log](16_DECISION_LOG.md)

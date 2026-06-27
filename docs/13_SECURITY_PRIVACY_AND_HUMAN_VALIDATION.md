@@ -1,74 +1,82 @@
 # Sécurité, confidentialité et validation humaine
 
-## Secrets et authentification
+**Porte d’entrée sécurité** — `personal_mail` est un système **security-by-design** : il traitera des mails et documents classés **SENSITIVE_PERSONAL** et **FINANCIAL_SENSITIVE** (administratif, bancaire, contrats, factures, santé, emploi, identité). Les tokens OAuth sont **SECRET**.
 
-| Règle | Implémentation |
-|-------|----------------|
-| OAuth uniquement | Pas de mot de passe Gmail en clair |
-| Tokens protégés | Stockage local sécurisé (à définir Phase 3) |
-| Exclusion Git | `.gitignore` : tokens, secrets, oauth/, credentials/ |
-| Révocation | Procédure par compte documentée à l’implémentation |
+Documentation détaillée :
 
-## Git et dépôt
+| Document | Contenu |
+|----------|---------|
+| [17 — Modèle de menace](17_SECURITY_THREAT_MODEL.md) | Actifs, menaces, matrice risque, règle canonique |
+| [18 — Classification des données](18_DATA_CLASSIFICATION_AND_RETENTION.md) | Niveaux PUBLIC → SECRET, Git, logs, rétention |
+| [19 — Secrets et tokens](19_SECRETS_AND_TOKEN_STORAGE.md) | OAuth, keyring Windows, checklist activation |
+| [20 — Logs et redaction](20_AUDIT_LOGGING_AND_REDACTION.md) | Audit, rapports expurgés, restauration |
+| [21 — Sécurité pièces jointes](21_ATTACHMENT_SECURITY.md) | Extensions dangereuses, PDF, quarantaine |
+| [config/security_policy.example.yaml](../config/security_policy.example.yaml) | Politique globale (exemple) |
 
-- `.gitignore` strict (voir racine du projet)
-- Pas de vrais comptes, mails, `.eml` réels
-- Pas de rapports avec données personnelles versionnés
-- Pas de logs sensibles commités
+## Règle canonique
+
+> En cas de doute : **ne pas supprimer, envoyer, ouvrir ni désabonner.** Classer en validation humaine (`SUSPICIEUX_A_VALIDER` ou `00_INBOX_REVIEW`).
+
+## Résumé des exigences
+
+### Secrets et authentification
+
+- **OAuth uniquement** — jamais de mot de passe Gmail en clair
+- Tokens dans **keyring / DPAPI** — pas de fichier plat en production
+- Tokens **jamais** dans Git, logs, rapports, exemples YAML, ni chat Hermès
+- Révocation et rotation documentées — [19](19_SECRETS_AND_TOKEN_STORAGE.md)
+
+### Git et dépôt
+
+- `.gitignore` strict — voir racine du projet
+- Pas de vrais comptes, mails, `.eml`, rapports PII, logs sensibles
 - Config réelle : `*.local.yaml` uniquement en local
+- Fixtures de test : synthétiques uniquement ([18](18_DATA_CLASSIFICATION_AND_RETENTION.md))
 
-## Actions sensibles (validation humaine obligatoire)
+### Actions sensibles (validation humaine obligatoire)
 
-- Suppression définitive (hors scope V1 par défaut)
-- Envoi de mail
+- Suppression définitive (**interdite en V1** par défaut)
+- Envoi de mail (**pas d’auto-send sensible en V1**)
 - Désabonnement newsletter
-- Changement filtre serveur Gmail non documenté
-- Extraction massive (seuil à définir)
-- Suppression de pièces jointes côté serveur
-- Modification directe de PersonalRadar (interdit)
-
-## Validation humaine — cas métier
-
-- Mails `SUSPICIEUX_A_VALIDER`
-- Ambiguïté financière ou administrative
 - Nouvelle règle destructive (après dry-run)
-- Désabonnement newsletter
-- Envoi tout courrier préparé par Hermès
+- Ambiguïté financière / administrative
+- Extraction vers PR d’un fichier suspect
 
-## Journalisation
+### Opérations sécurisées
 
-Chaque entrée de journal devrait inclure :
+| Mécanisme | Rôle |
+|-----------|------|
+| Dry-run par défaut | `default_mode: dry-run` |
+| Quarantaine | Avant toute suppression |
+| Trash | Avant delete définitif (hors V1) |
+| Permissions progressives | read → labels → extract → trash |
+| Hash documents | Intégrité extraction |
+| Logs redacted | Pas de corps mail ni token par défaut |
 
-| Champ | Description |
-|-------|-------------|
-| `action` | Type d’opération |
-| `timestamp` | Date/heure UTC |
-| `account_id` | Compte Gmail |
-| `message_id` | Id Gmail si applicable |
-| `result` | succès / échec / skipped |
-| `confidence` | Si classification |
-| `mode` | dry-run / safe-run / apply-run |
-| `document_path` | Si extraction |
+### Pièces jointes
 
-## Restauration
+Ne **jamais** exécuter ni ouvrir automatiquement les fichiers à risque. Détail : [21](21_ATTACHMENT_SECURITY.md).
 
-1. Privilégier **quarantaine** / label avant trash
-2. **Trash** Gmail avant suppression définitive
-3. **Pas de delete définitif en V1** par défaut
+### PersonalRadar
 
-## Pièces jointes dangereuses
+- Dépôt documentaire uniquement — `personal_radar\documents`
+- Pas d’écriture dans états internes PR
+- Documents validés ou non suspects uniquement
 
-Ne **jamais** ouvrir automatiquement :
+### Hermès
 
-- Exécutables : `.exe`, `.bat`, `.cmd`, `.ps1`, `.js`, `.vbs`, `.scr`
-- Archives suspectes (double extension, expéditeur inconnu)
-- Documents macro suspects (Office avec macros non attendues)
+- Ne jamais demander mot de passe ni afficher token
+- Rapports redacted si partage ; s’arrêter en cas de doute — [10](10_HERMES_OPERATING_PROTOCOL.md)
 
-En cas de doute → `SUSPICIEUX_A_VALIDER`, pas d’extraction du binaire.
+## Journalisation (résumé)
+
+Chaque action trace : `action_id`, timestamp, mode, `account_id`, `message_id`, action, résultat, confiance, chemin document si extraction. Détail et redaction : [20](20_AUDIT_LOGGING_AND_REDACTION.md).
 
 ## Documents liés
 
+- [Architecture](01_ARCHITECTURE_DECISIONS.md) — décision security-by-design
 - [OAuth](04_GMAIL_OAUTH_IMAP_API_MODEL.md)
 - [Rétention](07_RETENTION_AND_DELETION_RULES.md)
+- [Extraction](08_DOCUMENT_EXTRACTION_TO_PERSONAL_RADAR.md)
 - [Hermès](10_HERMES_OPERATING_PROTOCOL.md)
-- [Tests](14_TEST_AND_VALIDATION_PLAN.md)
+- [Tests sécurité](14_TEST_AND_VALIDATION_PLAN.md)

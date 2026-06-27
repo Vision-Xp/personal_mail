@@ -17,12 +17,23 @@
 
 | Principe | Détail |
 |----------|--------|
-| Pas de mot de passe en clair | Uniquement OAuth 2.0 par compte |
-| Tokens protégés | Stockage local sécurisé à définir (Phase 3+) |
-| Scopes minimaux | Lecture, labels, modification messages — pas plus que nécessaire |
-| Révocation | Possible côté Google et localement |
-| Séparation par compte | Un token store logique par `account_id` |
-| Git | Tokens exclus (.gitignore) |
+| Pas de mot de passe en clair | Uniquement OAuth 2.0 par compte — **interdit** de demander ou stocker un mot de passe Gmail |
+| Tokens protégés | Windows Credential Manager / DPAPI via keyring — voir [19](19_SECRETS_AND_TOKEN_STORAGE.md) |
+| Scopes minimaux | Lecture, labels, modify, attachments — **pas** `gmail.send` en V1 sans décision explicite |
+| Révocation | Google Account permissions + purge entrée keyring locale |
+| Rotation / réautorisation | Documentée si token compromis, scope change, ou échec refresh répété |
+| Séparation par compte | Un enregistrement token **isolé** par `account_id` — jamais de token partagé multi-comptes |
+| Git | Tokens classés **SECRET** — exclus (.gitignore), jamais dans logs ni rapports |
+| Fichiers plats | Interdits en production ; `tokens/`, `oauth/` ignorés Git |
+
+### Activation progressive (liée à OAuth)
+
+1. **Lecture seule** — list/get, dry-run
+2. **Labels** — safe-run classification
+3. **Extraction** — attachments.get + écriture PR
+4. **Trash** — apply-run après validation humaine
+
+Pas de suppression définitive ni envoi auto sensible en V1.
 
 ## IMAP
 
@@ -59,4 +70,5 @@
 
 - [Rétention](07_RETENTION_AND_DELETION_RULES.md)
 - [Sécurité](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md)
+- [Secrets et tokens](19_SECRETS_AND_TOKEN_STORAGE.md)
 - [Tests](14_TEST_AND_VALIDATION_PLAN.md)

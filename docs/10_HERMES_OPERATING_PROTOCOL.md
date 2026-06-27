@@ -40,6 +40,22 @@ Hermès est l’**opérateur** qui pilote `personal_mail` et coordonne validatio
 - Ne **pas** committer secrets, tokens, mails réels
 - Ne **pas** ouvrir automatiquement pièces jointes dangereuses
 
+## Protocole sécurité Hermès
+
+Hermès applique les règles de [13](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md) et [17](17_SECURITY_THREAT_MODEL.md) :
+
+| Règle | Comportement |
+|-------|--------------|
+| Mots de passe | **Ne jamais** demander un mot de passe Gmail |
+| Tokens | **Ne jamais** afficher, copier dans le chat, ou committer un token |
+| Validation humaine | Demander confirmation avant apply destructif, envoi, désabonnement |
+| Rapports | Produire version **redacted** si partage ; rapport complet reste local |
+| Doute | **S’arrêter** — classer en review, ne pas supprimer/envoyer/ouvrir |
+| Compte test d’abord | Pas de compte perso principal au premier run réel |
+| security_policy | Charger `security_policy.local.yaml` (copie locale de l’exemple) |
+
+**Règle canonique** : en cas de doute → validation humaine, pas d’action destructive.
+
 ## Modes opératoires
 
 | Mode | Effet |
@@ -50,7 +66,7 @@ Hermès est l’**opérateur** qui pilote `personal_mail` et coordonne validatio
 | `audit-run` | Newsletters, règles, stockage Gmail |
 | `compose-run` | Préparation brouillons — pas d’envoi |
 
-Voir [config/hermes_permissions.example.yaml](../config/hermes_permissions.example.yaml).
+Voir [config/hermes_permissions.example.yaml](../config/hermes_permissions.example.yaml) et [config/security_policy.example.yaml](../config/security_policy.example.yaml).
 
 ## Types de rapports
 
@@ -68,6 +84,7 @@ Stockage : [reports/](../reports/) — fichiers sensibles non versionnés.
 
 ## Documents liés
 
-- [Sécurité](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md)
+- [Sécurité — porte d’entrée](13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md)
+- [Logs et redaction](20_AUDIT_LOGGING_AND_REDACTION.md)
 - [Compose workflow](12_REPLY_AND_COMPOSE_WORKFLOW.md)
 - [Tests](14_TEST_AND_VALIDATION_PLAN.md)

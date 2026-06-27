@@ -27,6 +27,23 @@ I:\Dev Applications\personal_radar\documents
 
 Voir [config/document_routes.example.yaml](../config/document_routes.example.yaml).
 
+## Vérifications sécurité avant extraction
+
+Avant tout dépôt vers PersonalRadar :
+
+| Étape | Action |
+|-------|--------|
+| 1 | Vérifier extension / type MIME — voir [21](21_ATTACHMENT_SECURITY.md) |
+| 2 | Vérifier cohérence expéditeur / catégorie attendue |
+| 3 | Refuser ou mettre en quarantaine si fichier suspect |
+| 4 | **Ne pas envoyer à PersonalRadar** un fichier dangereux ou non validé |
+| 5 | Télécharger comme fichier **inerte** — jamais exécuter |
+| 6 | Calculer hash SHA-256 avant écriture finale |
+| 7 | Écrire sidecar `.meta.json` avec `action_log_id` |
+| 8 | Journaliser en mode dry-run si simulation |
+
+Si doute → `SUSPICIEUX_A_VALIDER` + alerte Hermès — pas d’extraction PR.
+
 ## Cas avec pièce jointe
 
 Si la pièce jointe contient **toutes** les informations utiles et le corps du mail est redondant :
@@ -91,14 +108,18 @@ Exemple fictif : `2026-06-27__ENGIE__facture__89-50EUR__gmail_personal_1.pdf`
 
 ## Validation extraction
 
-1. Fichier présent sur disque
-2. Taille non nulle
-3. Hash calculé et enregistré
-4. Lisibilité vérifiée si possible (PDF/texte)
-5. Action journalisée
-6. Entrée rapport d’extraction
+1. Contrôles sécurité (extension, expéditeur, suspicion) — voir ci-dessus
+2. Fichier présent sur disque
+3. Taille non nulle
+4. Hash calculé et enregistré (intégrité + anti-doublon)
+5. Lisibilité vérifiée si possible (PDF/texte) — sans exécuter le fichier
+6. Métadonnées sidecar complètes
+7. Action journalisée (`action_id`, mode, compte)
+8. Entrée rapport d’extraction (local, non commité)
 
 ## Documents liés
 
 - [Intégration PersonalRadar](09_PERSONAL_RADAR_INTEGRATION.md)
+- [Sécurité pièces jointes](21_ATTACHMENT_SECURITY.md)
+- [Logs et redaction](20_AUDIT_LOGGING_AND_REDACTION.md)
 - [Tests](14_TEST_AND_VALIDATION_PLAN.md)

@@ -18,5 +18,6 @@ Ce dossier contient **uniquement des fichiers d’exemple** pour la phase de sp�
 | [retention_rules.example.yaml](retention_rules.example.yaml) | Conservation, suppression, audits |
 | [document_routes.example.yaml](document_routes.example.yaml) | Routage vers `personal_radar\documents` |
 | [hermes_permissions.example.yaml](hermes_permissions.example.yaml) | Permissions et validations Hermès |
+| [security_policy.example.yaml](security_policy.example.yaml) | Politique sécurité globale (dry-run, OAuth, logs, PJ, PR) |
 
-Voir aussi [docs/10_HERMES_OPERATING_PROTOCOL.md](../docs/10_HERMES_OPERATING_PROTOCOL.md) et [docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md](../docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md).
+Voir aussi [docs/10_HERMES_OPERATING_PROTOCOL.md](../docs/10_HERMES_OPERATING_PROTOCOL.md), [docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md](../docs/13_SECURITY_PRIVACY_AND_HUMAN_VALIDATION.md) et [docs/17_SECURITY_THREAT_MODEL.md](../docs/17_SECURITY_THREAT_MODEL.md).
