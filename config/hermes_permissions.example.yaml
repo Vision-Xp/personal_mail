@@ -1,0 +1,37 @@
+# Hermès permissions — example only
+hermes_permissions:
+  can_dry_run: true
+  can_label_messages: true
+  can_extract_documents: true
+  can_prepare_drafts: true
+  can_create_gmail_labels: true
+  can_move_to_quarantine: true
+  can_trash_confirmed_noise: false
+  can_permanently_delete: false
+  can_send_email: false
+  can_unsubscribe_newsletters: false
+
+  requires_human_validation_for:
+    - send_email
+    - permanently_delete
+    - unsubscribe
+    - suspicious_mail
+    - new_destructive_rule
+    - financial_or_administrative_ambiguity
+
+  modes:
+    dry_run:
+      description: "Analysis only — no Gmail mutations"
+      allowed: true
+    safe_run:
+      description: "Labels and non-destructive extraction"
+      allowed: true
+    apply_run:
+      description: "Validated destructive actions"
+      allowed: false  # enable only after explicit validation
+    audit_run:
+      description: "Newsletter audits, rule reviews, storage checks"
+      allowed: true
+    compose_run:
+      description: "Draft preparation — no send"
+      allowed: true

@@ -1,0 +1,59 @@
+# Document routing to PersonalRadar — example only
+# Do NOT create these folders in personal_radar during spec phase.
+base_path: "I:\\Dev Applications\\personal_radar\\documents"
+
+routes:
+  - category: BANQUE
+    sub_path: "Banque"
+    description: "Bank statements, RIB notices, card receipts"
+
+  - category: ASSURANCES
+    sub_path: "Assurance"
+    description: "Insurance policies, claims, renewals"
+
+  - category: ENERGIE
+    sub_path: "Energie"
+    description: "Energy bills, contract changes, meter readings"
+
+  - category: ACHATS_GARANTIES
+    sub_path: "Achats"
+    description: "Purchase proofs, order confirmations"
+
+  - category: ACHATS_GARANTIES
+    sub_path: "Garanties"
+    match_subcategory: ["Garanties", "Preuves d'achat"]
+    description: "Warranties and purchase proofs"
+
+  - category: CONTRATS
+    sub_path: "Contrats"
+    description: "Signed contracts, amendments, termination notices"
+
+  - category: ADMINISTRATIF
+    sub_path: "Administratif"
+    description: "Tax, CAF, CPAM, employer, administrative mail"
+
+  - category: ADMINISTRATIF
+    sub_path: "Sante"
+    match_subcategory: ["Santé", "CPAM"]
+    description: "Health-related administrative documents"
+
+  - category: ADMINISTRATIF
+    sub_path: "Emploi"
+    match_subcategory: ["Employeur", "France Travail"]
+    description: "Employment-related documents"
+
+  - category: ABONNEMENTS
+    sub_path: "Abonnements"
+    description: "Subscription confirmations and invoices"
+
+  - category: REVENUS
+    sub_path: "Revenus"
+    description: "Salary slips, refunds, income proofs"
+
+  - category: SORTIES_ARGENT
+    sub_path: "Sorties_Argent"
+    description: "Bills, recurring payments, expenses"
+
+manifest:
+  path: "I:\\Dev Applications\\personal_radar\\documents\\_incoming_mail_manifest.jsonl"
+  enabled: true

@@ -1,0 +1,66 @@
+# Retention and deletion rules — example only
+retention_rules:
+  - rule_id: social_networks_30_days
+    enabled: true
+    description: "Delete social network notifications older than 30 days after rule validation"
+    category: RESEAUX_SOCIAUX
+    max_age_days: 30
+    action: trash
+    exceptions:
+      - booking_musical
+      - professional_opportunity
+      - dryard_uncloned_related
+      - account_security_alert
+      - useful_proof
+    dry_run_required: true
+    human_validation_required: true
+
+  - rule_id: promotions_useless
+    enabled: true
+    description: "Remove clearly useless promotions after validation"
+    category: PROMOTIONS_INUTILES
+    action: trash
+    dry_run_required: true
+    human_validation_required: true
+
+  - rule_id: scams_confirmed
+    enabled: true
+    description: "Remove confirmed scams/phishing after validation"
+    category: SCAM_AVERE
+    min_confidence: 0.95
+    action: trash
+    dry_run_required: true
+    human_validation_required: true
+
+  - rule_id: newsletter_semiannual_audit
+    enabled: true
+    description: "Audit newsletters 1–2 times per year — no auto-unsubscribe in V1"
+    category: NEWSLETTERS
+    audit_frequency: "semiannual"
+    actions:
+      - list_senders
+      - propose_keep_review_unsubscribe
+    human_validation_required: true
+
+  - rule_id: important_documents_keep
+    enabled: true
+    description: "Retain administrative, financial, and contractual mail indefinitely"
+    categories:
+      - ADMINISTRATIF
+      - BANQUE
+      - ASSURANCES
+      - ENERGIE
+      - REVENUS
+      - SORTIES_ARGENT
+      - CONTRATS
+      - ACHATS_GARANTIES
+      - ABONNEMENTS
+    action: retain
+    human_validation_required: false
+
+  - rule_id: suspicious_human_review
+    enabled: true
+    description: "Never auto-delete suspicious uncertain mail"
+    category: SUSPICIEUX_A_VALIDER
+    action: quarantine
+    human_validation_required: true

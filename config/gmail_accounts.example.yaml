@@ -1,0 +1,27 @@
+accounts:
+  - id: gmail_personal_1
+    address: "example.personal@gmail.com"
+    enabled: false
+    auth:
+      method: oauth
+      token_store: "local_secure_store"
+    rules_profile: "personal"
+    notes: "Example only. Do not commit real accounts."
+
+  - id: gmail_music_1
+    address: "example.music@gmail.com"
+    enabled: false
+    auth:
+      method: oauth
+      token_store: "local_secure_store"
+    rules_profile: "music"
+    notes: "Example only. Do not commit real accounts."
+
+  - id: gmail_tools_1
+    address: "example.tools@gmail.com"
+    enabled: false
+    auth:
+      method: oauth
+      token_store: "local_secure_store"
+    rules_profile: "tools"
+    notes: "Example only. Do not commit real accounts."

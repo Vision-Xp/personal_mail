@@ -1,0 +1,120 @@
+# Category classification rules — example only, no real data
+rules:
+  - rule_id: bank_credit_agricole
+    enabled: true
+    description: "Emails from Crédit Agricole domains"
+    match:
+      sender_domain: ["credit-agricole.fr", "creditagricole.fr"]
+      subject_keywords: ["relevé", "virement", "prélèvement"]
+    category: BANQUE
+    subcategory: "Crédit Agricole"
+    confidence: 0.92
+    actions:
+      - apply_label
+      - extract_if_attachment
+    human_validation_required: false
+
+  - rule_id: bank_revolut
+    enabled: true
+    description: "Revolut transaction and statement emails"
+    match:
+      sender_domain: ["revolut.com"]
+      subject_keywords: ["transaction", "statement", "receipt"]
+    category: BANQUE
+    subcategory: Revolut
+    confidence: 0.90
+    actions:
+      - apply_label
+      - extract_if_attachment
+    human_validation_required: false
+
+  - rule_id: bank_fortuneo
+    enabled: true
+    description: "Fortuneo banking notifications"
+    match:
+      sender_domain: ["fortuneo.fr"]
+    category: BANQUE
+    subcategory: Fortuneo
+    confidence: 0.88
+    actions:
+      - apply_label
+    human_validation_required: false
+
+  - rule_id: bank_trade_republic
+    enabled: true
+    description: "Trade Republic portfolio and trade confirmations"
+    match:
+      sender_domain: ["traderepublic.com"]
+    category: BANQUE
+    subcategory: "Trade Republic"
+    confidence: 0.88
+    actions:
+      - apply_label
+      - extract_if_attachment
+    human_validation_required: false
+
+  - rule_id: energy_engie
+    enabled: true
+    description: "ENGIE bills and contract notices"
+    match:
+      sender_domain: ["engie.fr", "engie.com"]
+      subject_keywords: ["facture", "échéance", "contrat"]
+    category: ENERGIE
+    subcategory: ENGIE
+    confidence: 0.91
+    actions:
+      - apply_label
+      - extract_if_attachment
+    human_validation_required: false
+
+  - rule_id: social_instagram
+    enabled: true
+    description: "Instagram notifications — short retention"
+    match:
+      sender_domain: ["instagram.com", "mail.instagram.com"]
+    category: RESEAUX_SOCIAUX
+    subcategory: Instagram
+    confidence: 0.85
+    actions:
+      - apply_label
+    human_validation_required: false
+
+  - rule_id: social_soundcloud
+    enabled: true
+    description: "SoundCloud notifications — music account exceptions possible"
+    match:
+      sender_domain: ["soundcloud.com"]
+    category: RESEAUX_SOCIAUX
+    subcategory: SoundCloud
+    confidence: 0.82
+    actions:
+      - apply_label
+    human_validation_required: false
+
+  - rule_id: newsletter_generic
+    enabled: true
+    description: "Generic newsletter detection via List-Unsubscribe header or keywords"
+    match:
+      header_contains: ["List-Unsubscribe"]
+      subject_keywords: ["newsletter", "digest", "weekly"]
+    category: NEWSLETTERS
+    subcategory: "À revoir"
+    confidence: 0.75
+    actions:
+      - apply_label
+    human_validation_required: false
+
+  - rule_id: scam_phishing_pattern
+    enabled: true
+    description: "High-confidence phishing patterns — quarantine or delete after validation"
+    match:
+      subject_keywords: ["urgent", "verify your account", "suspended"]
+      body_keywords: ["click here immediately", "confirm password"]
+      suspicious_links: true
+    category: SCAM_AVERE
+    subcategory: null
+    confidence: 0.70
+    actions:
+      - apply_label
+      - move_to_quarantine
+    human_validation_required: true
