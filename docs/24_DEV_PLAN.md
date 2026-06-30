@@ -36,6 +36,8 @@ Critères GO
 Risques : quota API, latence sync Android.
 Mitigation : retry/backoff, mesure explicit.
 
+Statut : GO. Labels PERSONAL_MAIL_TEST/* créés et visibles Desktop + Android.
+
 ### Phase 2 — Rust CLI skeleton
 Objectif : base exécutable, config, logs, erreurs, dry-run global.
 

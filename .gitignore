@@ -57,3 +57,5 @@ attachments/
 Thumbs.db
 .vscode/
 .idea/
+
+config/gmail_oauth_client_secret.json
