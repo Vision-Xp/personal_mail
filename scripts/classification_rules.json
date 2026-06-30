@@ -1,0 +1,16 @@
+{
+  "domain_rules": {},
+  "sender_rules": {
+    "accounts.google.com": "GOOGLE_SECURITY"
+  },
+  "subject_rules": {},
+  "body_rules": {},
+  "confidence_thresholds": {
+    "GOOGLE_SECURITY": 90,
+    "BANQUE": 75,
+    "ASSURANCE": 70,
+    "ÉNERGIE": 70,
+    "REVENUS": 75,
+    "ACHATS": 65
+  }
+}
