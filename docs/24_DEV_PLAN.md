@@ -105,6 +105,8 @@ Critères GO
 - Rapports lisibles.
 - Aucun delete; labels synchronisés.
 
+Statut : GO. Moteur de classification ajouté (category/scoring/engine), CLI --test-recent disponible pour revue humaine. Validation via vérification ad hoc : build OK, --labels-list OK, --whoami OK.
+
 ### Phase 5 — Extraction documentaire vers PersonalRadar
 Objectif : exporter pièces jointes / .eml vers I:\Dev Applications\personal_radar\documents.
 
