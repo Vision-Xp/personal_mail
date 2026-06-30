@@ -1,0 +1,25 @@
+accounts:
+  - account_id: PERSONAL_MAIL_TEST
+    gmail_email: admin.studiofocus@gmail.com
+    enabled: true
+
+modes:
+  default_mode: dry-run
+  allow_modes:
+    - dry-run
+    - safe-run
+    - apply-run
+    - audit-run
+
+logging:
+  directory: logs
+  filename: personal_mail.log
+  max_bytes: 10485760
+  max_files: 7
+  format: json
+
+# Sûr par défaut, sans mutation
+rules:
+  protections:
+    - disallow_delete
+    - require_human_validation_for_new_rules
