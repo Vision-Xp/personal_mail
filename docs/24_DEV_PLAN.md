@@ -87,6 +87,8 @@ Critères GO
 - Labels test visibles partout.
 - Aucun secret exposé (S1–S3 passent).
 
+Statut : GO. Labels PERSONAL_MAIL_TEST/* créés et visibles Desktop + Android. Connexion validée avec le compte test via OAuth offline. Flux Device Code refusé par Google (401) ; on reste sur authorization_code pour la preuve. Prochaine étape : implémenter la classification non destructive sans suppression.
+
 ### Phase 4 — Classification non destructive
 Objectif : appliquer labels Gmail selon règles métier, sans suppression.
 
